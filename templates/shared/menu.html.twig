@@ -1,0 +1,227 @@
+<div class="navbar-expand-lg navbar-light">
+  <div id="sidebarNav" class="navbar-vertical">
+  {# <div id="sidebarNav" class="collapse navbar-collapse navbar-vertical"> #}
+    <div class="card flex-grow-1 mb-5 shadow radius border-1">
+      <div class="card-body">
+        <div class="text-center mb-5">
+          <div class="avatar-circle avatar-g my-3">
+            {% if app.user.picture is null %}
+            <img class="avatar-img" src="{{asset('images/userprofile/default.jpg')}}" alt="Image Description">
+            {% else %}
+            <img class="avatar-img" src="{{asset('images/userprofile/'~ app.user.picture)}}"
+              alt="Image Description">
+            <img class="avatar-status avatar-g-img" src="{{asset('build/images/top-vendor.svg')}}"
+              alt="Image Description" aria-label="Verified user">
+            {% endif %}
+          </div>
+          <h4 class="card-title fs-5 mb-0">{{app.user.firstName ~' '~app.user.lastName}}</h4>
+          <p class="card-text small">{{app.user.mail}}</p>
+        </div>
+        {% if is_granted('ROLE_STUDENT') %}
+        <h6 class="card-header-title my-3">Mes activités</h6>
+        {% else %}
+        <h6 class="card-header-title my-3">Gestion des cours</h6>
+        {% endif %}
+
+        <ul class="nav nav-sm nav-tabs nav-vertical border-0">
+          {% if (is_granted('ROLE_ADMIN')) %}
+          <li class="nav-item">
+            <a class="nav-link text-dark {{ current=='cours'? 'dashboard' }}" href="{{ path('invalide_formations') }}">
+              <svg width="16" height="16" fill="#8c98a4" class="bi bi-journals me-2 mb-1" viewBox="0 0 16 16">
+                <path
+                  d="M5 0h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2 2 2 0 0 1-2 2H3a2 2 0 0 1-2-2h1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1H1a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v9a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1H3a2 2 0 0 1 2-2z">
+                </path>
+                <path
+                  d="M1 6v-.5a.5.5 0 0 1 1 0V6h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V9h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 2.5v.5H.5a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1H2v-.5a.5.5 0 0 0-1 0z">
+                </path>
+              </svg> Liste des cours
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark {{ current=='addcours'? 'dashboard' }}" href="{{ path('user_add_course') }}">
+              <svg width="16" height="16" fill="#8c98a4" class="bi bi-plus-square me-2 mb-1" viewBox="0 0 16 16">
+                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+              </svg> Nouveau cours
+            </a>
+          </li>
+          {% elseif is_granted('ROLE_TEACHER') %}
+          <li class="nav-item">
+            <a class="nav-link text-dark {{ current=='cours'? 'dashboard' }}" href="{{ path('user_list_formations') }}">
+              <svg width="16" height="16" fill="#8c98a4" class="bi bi-journals me-2 mb-1" viewBox="0 0 16 16">
+                <path
+                  d="M5 0h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2 2 2 0 0 1-2 2H3a2 2 0 0 1-2-2h1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1H1a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v9a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1H3a2 2 0 0 1 2-2z">
+                </path>
+                <path
+                  d="M1 6v-.5a.5.5 0 0 1 1 0V6h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V9h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 2.5v.5H.5a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1H2v-.5a.5.5 0 0 0-1 0z">
+                </path>
+              </svg>
+              Liste des cours
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark {{ current=='addcours'? 'dashboard' }}" href="{{ path('user_add_course') }}">
+              <svg width="16" height="16" fill="#8c98a4" class="bi bi-plus-square me-2 mb-1" viewBox="0 0 16 16">
+                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+              </svg> Nouveau cours
+            </a>
+          </li>
+          {% elseif is_granted('ROLE_CONTROLLER') %}
+          <li class="nav-item">
+            <a class="nav-link text-dark {{ current=='cours'? 'dashboard' }}" href="{{ path('invalide_formations') }}">
+              <svg width="16" height="16" fill="#8c98a4" class="bi bi-journals me-2 mb-1" viewBox="0 0 16 16">
+                <path
+                  d="M5 0h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2 2 2 0 0 1-2 2H3a2 2 0 0 1-2-2h1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1H1a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v9a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1H3a2 2 0 0 1 2-2z">
+                </path>
+                <path
+                  d="M1 6v-.5a.5.5 0 0 1 1 0V6h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V9h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 2.5v.5H.5a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1H2v-.5a.5.5 0 0 0-1 0z">
+                </path>
+              </svg>
+              Liste des cours
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark {{ current=='addcours'? 'dashboard' }}" href="{{ path('user_add_course') }}">
+              <svg width="16" height="16" fill="#8c98a4" class="bi bi-plus-square me-2 mb-1" viewBox="0 0 16 16">
+                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+              </svg> Nouveau cours
+            </a>
+          </li>
+          {% elseif is_granted('ROLE_STUDENT') %}
+          <li class="nav-item">
+            <a class="nav-link text-dark {{ current=='cours'? 'dashboard' }}" href="{{ path('user_current_courses') }}">
+              <svg width="16" height="16" fill="#8c98a4" class="bi bi-journals me-2 mb-1" viewBox="0 0 16 16">
+                <path
+                  d="M5 0h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2 2 2 0 0 1-2 2H3a2 2 0 0 1-2-2h1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1H1a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v9a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1H3a2 2 0 0 1 2-2z">
+                </path>
+                <path
+                  d="M1 6v-.5a.5.5 0 0 1 1 0V6h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V9h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 2.5v.5H.5a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1H2v-.5a.5.5 0 0 0-1 0z">
+                </path>
+              </svg> Mes cours
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark {{ current=='formations'? 'dashboard' }}" href="{{ path('not-accessible') }}">
+              <svg width="16" height="16" fill="#8c98a4" class="bi bi-mortarboard me-2 mb-1" viewBox="0 0 16 16">
+                <path d="M8.211 2.047a.5.5 0 0 0-.422 0l-7.5 3.5a.5.5 0 0 0 .025.917l7.5 3a.5.5 0 0 0 .372 0L14 7.14V13a1 1 0 0 0-1 1v2h3v-2a1 1 0 0 0-1-1V6.739l.686-.275a.5.5 0 0 0 .025-.917l-7.5-3.5ZM8 8.46 1.758 5.965 8 3.052l6.242 2.913L8 8.46Z"/>
+                <path d="M4.176 9.032a.5.5 0 0 0-.656.327l-.5 1.7a.5.5 0 0 0 .294.605l4.5 1.8a.5.5 0 0 0 .372 0l4.5-1.8a.5.5 0 0 0 .294-.605l-.5-1.7a.5.5 0 0 0-.656-.327L8 10.466 4.176 9.032Zm-.068 1.873.22-.748 3.496 1.311a.5.5 0 0 0 .352 0l3.496-1.311.22.748L8 12.46l-3.892-1.556Z"/>
+              </svg> Mes formations
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark {{ current=='certificat'? 'dashboard' }}" href="{{ path('not-accessible') }}">
+              <svg width="16" height="16" fill="#8c98a4" class="bi bi-award me-2 mb-1" viewBox="0 0 16 16">
+                <path d="M9.669.864 8 0 6.331.864l-1.858.282-.842 1.68-1.337 1.32L2.6 6l-.306 1.854 1.337 1.32.842 1.68 1.858.282L8 12l1.669-.864 1.858-.282.842-1.68 1.337-1.32L13.4 6l.306-1.854-1.337-1.32-.842-1.68L9.669.864zm1.196 1.193.684 1.365 1.086 1.072L12.387 6l.248 1.506-1.086 1.072-.684 1.365-1.51.229L8 10.874l-1.355-.702-1.51-.229-.684-1.365-1.086-1.072L3.614 6l-.25-1.506 1.087-1.072.684-1.365 1.51-.229L8 1.126l1.356.702 1.509.229z"/>
+                <path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1 4 11.794z"/>
+              </svg> Mes certificats
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+        {% if (is_granted('ROLE_TEACHER')) or (is_granted('ROLE_ADMIN')) or (is_granted('ROLE_CONTROLLER')) %}
+        <h6 class="card-header-title my-3">Gestion des formations</h6>
+        <ul class="nav nav-sm nav-tabs nav-vertical border-0">
+        <li class="nav-item">
+          <a class="nav-link text-dark {{ current=='formation'? 'dashboard' }}" href="{{ path('not-accessible') }}">
+            <svg width="16" height="16" fill="#8c98a4" class="bi bi-mortarboard me-2 mb-1" viewBox="0 0 16 16">
+              <path d="M8.211 2.047a.5.5 0 0 0-.422 0l-7.5 3.5a.5.5 0 0 0 .025.917l7.5 3a.5.5 0 0 0 .372 0L14 7.14V13a1 1 0 0 0-1 1v2h3v-2a1 1 0 0 0-1-1V6.739l.686-.275a.5.5 0 0 0 .025-.917l-7.5-3.5ZM8 8.46 1.758 5.965 8 3.052l6.242 2.913L8 8.46Z"/>
+              <path d="M4.176 9.032a.5.5 0 0 0-.656.327l-.5 1.7a.5.5 0 0 0 .294.605l4.5 1.8a.5.5 0 0 0 .372 0l4.5-1.8a.5.5 0 0 0 .294-.605l-.5-1.7a.5.5 0 0 0-.656-.327L8 10.466 4.176 9.032Zm-.068 1.873.22-.748 3.496 1.311a.5.5 0 0 0 .352 0l3.496-1.311.22.748L8 12.46l-3.892-1.556Z"/>
+            </svg>
+            Liste des formations
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark {{ current=='formationencour'? 'dashboard' }}" href="{{ path('not-accessible') }}">
+            <svg width="16" height="16" fill="#8c98a4" class="bi bi-check-square me-2 mb-1" viewBox="0 0 16 16">
+              <path
+                d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+              <path
+                d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.235.235 0 0 1 .02-.022z" />
+            </svg> Formation encours
+          </a>
+        </li>
+        </ul>
+        {% endif %}
+
+        {% if is_granted('ROLE_ADMIN') %}
+        <h6 class="card-header-title my-3">Gestion de site</h6>
+        <ul class="nav nav-sm nav-tabs nav-vertical border-0">
+          <li class="nav-item">
+            <a class="nav-link text-dark {{ current=='categorie'? 'dashboard' }}"
+              href="{{ path('manage_categories') }}">
+              <svg width="16" height="16" fill="#8c98a4" class="bi bi-folder2-open me-2 mb-1" viewBox="0 0 16 16">
+                <path
+                  d="M1 3.5A1.5 1.5 0 0 1 2.5 2h2.764c.958 0 1.76.56 2.311 1.184C7.985 3.648 8.48 4 9 4h4.5A1.5 1.5 0 0 1 15 5.5v.64c.57.265.94.876.856 1.546l-.64 5.124A2.5 2.5 0 0 1 12.733 15H3.266a2.5 2.5 0 0 1-2.481-2.19l-.64-5.124A1.5 1.5 0 0 1 1 6.14V3.5zM2 6h12v-.5a.5.5 0 0 0-.5-.5H9c-.964 0-1.71-.629-2.174-1.154C6.374 3.334 5.82 3 5.264 3H2.5a.5.5 0 0 0-.5.5V6zm-.367 1a.5.5 0 0 0-.496.562l.64 5.124A1.5 1.5 0 0 0 3.266 14h9.468a1.5 1.5 0 0 0 1.489-1.314l.64-5.124A.5.5 0 0 0 14.367 7H1.633z" />
+              </svg> Gestion des catégories
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark {{ current=='users'? 'dashboard' }}" href="{{ path('manage_users') }}">
+              <svg width="16" height="16" fill="#8c98a4" class="bi bi-people me-2 mb-1" viewBox="0 0 16 16">
+                <path
+                  d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z" />
+              </svg> Gestion des utilisateurs
+            </a>
+          </li>
+        </ul>
+        {% endif %}
+
+        <h6 class="card-header-title my-3">Mon compte</h6>
+        <ul class="nav nav-sm nav-tabs nav-vertical border-0">
+          <li class="nav-item border-0">
+            <a class="nav-link text-dark {{ current=='profile'? 'dashboard' }}" href="{{ path('user_profile') }}">
+              <svg width="16" height="16" fill="#8c98a4" class="bi bi-info-circle me-2 mb-1" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                <path
+                  d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+              </svg> Mes informations
+            </a>
+          </li>
+          <li class="nav-item border-0">
+            <a class="nav-link text-dark {{ current=='password'? 'dashboard' }}"
+              href="{{ path('user_change_password') }}">
+              <svg width="16" height="16" fill="#8c98a4" class="bi bi-shield-check me-2 mb-1" viewBox="0 0 16 16">
+                <path
+                  d="M5.338 1.59a61.44 61.44 0 0 0-2.837.856.481.481 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.725 10.725 0 0 0 2.287 2.233c.346.244.652.42.893.533.12.057.218.095.293.118a.55.55 0 0 0 .101.025.615.615 0 0 0 .1-.025c.076-.023.174-.061.294-.118.24-.113.547-.29.893-.533a10.726 10.726 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.775 11.775 0 0 1-2.517 2.453 7.159 7.159 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7.158 7.158 0 0 1-1.048-.625 11.777 11.777 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 62.456 62.456 0 0 1 5.072.56z" />
+                <path
+                  d="M10.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
+              </svg> Sécurité
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="{{ path('logout')}}">
+              <svg width="16" height="16" fill="#8c98a4" class="bi bi-box-arrow-left me-2 mb-1" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                  d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z" />
+                <path fill-rule="evenodd"
+                  d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z" />
+              </svg> Déconnexion
+            </a>
+          </li>
+          {# <li class="nav-item border-0">
+            <a class="nav-link text-dark {{ current=='adress'? 'dashboard' }}" href="{{ path('user_change_address') }}">
+              <svg width="16" height="16" fill="#8c98a4" class="bi bi-geo-alt me-2 mb-1" viewBox="0 0 16 16">
+                <path
+                  d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z" />
+                <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+              </svg> Adresse
+            </a>
+          </li> #}
+        </ul>
+        {# <ul class="nav nav-sm nav-tabs nav-vertical border-0">
+          <li class="nav-item border-0">
+            <a class="nav-link text-dark {{ current=='disable'? 'dashboard' }}"
+              href="{{ path('user_disable_account') }}">
+              <svg width="16" height="16" fill="#8c98a4" class="bi bi-slash-circle me-2 mb-1" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                <path d="M11.354 4.646a.5.5 0 0 0-.708 0l-6 6a.5.5 0 0 0 .708.708l6-6a.5.5 0 0 0 0-.708z" />
+              </svg> Désactiver compte
+            </a>
+          </li>
+        </ul> #}
+      </div>
+    </div>
+  </div>
+</div>

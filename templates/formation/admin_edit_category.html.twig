@@ -1,0 +1,55 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+<div class="container-fluid p-0">
+  <div class="container pt-5">
+    <div class="row">
+      <div class="col-lg-3 pe-5">
+        {% include 'shared/menu.html.twig' %}
+      </div>
+      <div class="col-lg-9">
+        <h5 class="card-header-title mt-4 mb-4">Modifier catégorie</h5>
+        {{ form_start(categoryForm,
+        {'action': path('admin_edit_category', {'id': category.id }) , 'method': 'POST','attr': { 'novalidate':
+        'novalidate' }}) }}
+        <div class="row mt-4 mb-4">
+          <label for="emailLabel" class="col-sm-3 col-form-label form-label">Nom</label>
+          <div class="col-sm-9">
+            {{ form_widget(categoryForm.name, { 'attr': {'placeholder': 'Nom de catégorie*'} }) }}
+            {{ form_errors(categoryForm.name) }}
+          </div>
+        </div>
+        <div class="row mb-4">
+          <label class="col-sm-3 col-form-label form-label">Alias</label>
+          <div class="col-sm-9">
+            <div class="input-group">
+              {{ form_widget(categoryForm.alias, { 'attr': {'placeholder': 'Alias de catégorie*'} }) }}
+              {{ form_errors(categoryForm.alias) }}
+            </div>
+          </div>
+        </div>
+        <div class="row mb-4">
+          <label class="col-sm-3 col-form-label form-label">Icon svg</label>
+          <div class="col-sm-9">
+            <div class="input-group">
+              {{ form_widget(categoryForm.icon) }}
+              {{ form_errors(categoryForm.icon) }}
+            </div>
+          </div>
+        </div>
+        {% for message in app.flashes('success-add-category') %}
+        <div class="flash-notice text-start px-3">
+          <p class="text-success">{{ message }}</p>
+        </div>
+        {% endfor %}
+        <div class="home-card-footer m-3 pb-5">
+          <div class="d-flex justify-content-end gap-3">
+            <button type="submit" class="btn btn-ioacademy">Modifier</button>
+          </div>
+        </div>
+        {{ form_end(categoryForm) }}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

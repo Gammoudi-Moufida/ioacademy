@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reinitialisation de mot de passe{% endblock %}
+
+{% block content %}
+<div class="container my-5 py-5">
+  <div class="flex-grow-1 mx-auto mw-50">
+    <div class="text-center mb-5 mb-md-7">
+      <h1 class="h2">Reset mot de passe</h1>
+      <p>Entrez votre nouveau mot de passe et valider le changement.</p>
+    </div>
+    {{ form_start(resetForm, {attr: {novalidate: 'novalidate'}}) }}
+    <div class="mb-4">
+      <div class="d-flex justify-content-between align-items-center">
+        <label class="form-label" for="signupModalFormResetPasswordEmail" tabindex="0">Nouveau mot de passe</label>
+      </div>
+      {{ form_widget(resetForm.password.first) }}
+      {{ form_errors(resetForm.password.first) }}
+    </div>
+    <div class="mb-4">
+      <div class="d-flex justify-content-between align-items-center">
+        <label class="form-label" for="signupModalFormResetPasswordEmail" tabindex="0">Retapez mot de passe</label>
+      </div>
+      {{ form_widget(resetForm.password.second) }}
+      {{ form_errors(resetForm.password.second) }}
+    </div>
+
+    <div class="d-grid mb-4">
+      <button type="submit" class="btn btn-primary">Valider</button>
+    </div>
+    {% for message in app.flashes('success') %}
+    <div class="flash-notice text-start">
+      <p class="text-success">{{ message }}</p>
+    </div>
+    {% endfor %}
+    {{ form_end(resetForm) }}
+  </div>
+</div>
+{% endblock %}

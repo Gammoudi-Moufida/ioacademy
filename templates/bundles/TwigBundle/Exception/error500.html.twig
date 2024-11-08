@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>
+    {% block title %}Welcome!
+    {% endblock %}
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  {% block stylesheets %}
+  {{ encore_entry_link_tags('app') }}
+  {% endblock %}
+</head>
+
+<body>
+  {% block body %}
+
+  {% block content %}
+  <header id="header" class="navbar navbar-expand navbar-light navbar-absolute-top">
+    <div class="container">
+      <nav class="navbar-nav-wrap">
+        <a class="navbar-brand" href="{{ path('home') }}">
+          <h1 class="h1-logo me-2">IO<span class="span-logo">Academy</span></h1>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="content" role="main">
+    <div class="container text-center justify-content-center h-100 my-5 py-5">
+      <div class="mb-3">
+        <img class="img-fluid mw-50" src="{{asset('build/images/oc-error.svg')}}" alt="Image Description">
+      </div>
+      <div class="mb-4">
+        <h1 class="display-1 text-danger mb-0 fw-bold my-3">500</h1>
+        <h2 class="display-6 mb-0 fw-bold my-3">Oups! Il semble que le serveur a rencontré une condition inattendue.</h2>
+        <a class="btn btn-primary my-3 text-white" href="{{ path('home') }}">Retour à la page d'accueil</a>
+      </div>
+    </div>
+  </main>
+
+  {% endblock %}
+
+  {% include 'shared/footer.html.twig' %}
+
+  {% endblock %}
+
+  {% block javascripts %}
+  {{ encore_entry_script_tags('app') }}
+  {% endblock %}
+
+</body>
+
+</html>

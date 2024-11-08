@@ -1,0 +1,27 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+<div class="container-fluid p-0">
+  <div class="container pt-5">
+    <div class="row">
+      <div class="col-lg-3 pe-5">
+        {% include 'shared/menu.html.twig' %}
+      </div>
+      <div class="col-lg-9">
+        <div class="container mt-5">
+          <div class="row">
+            <img src="{{asset('build/images/no-courses.svg')}}" class="card-img-top rounded-img-5 img-card-size"
+              alt="no cours">
+            <p class="text-center my-4 text-muted">Page web inaccessible pour le moment.</p>
+            {# <p class="text-center text-muted">
+              <a class="btn nav-link btn-no-course" href="{{ path('formation')}}">Explorer les cours
+              </a>
+            </p> #}
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

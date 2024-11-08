@@ -1,0 +1,88 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+<div class="container">
+  <div class="row mt-5">
+    <nav aria-label="breadcrumb">
+      <ul class="list-inline">
+        <li class="list-inline-item"><a class="nav-link text-dark p-0" href="{{ path('home') }}">Accueil</a></li>
+        <li class="list-inline-item">/</li>
+        <li class="list-inline-item"><a class="nav-link text-dark p-0" href="{{ path('formation') }}">Cours</a></li>
+      </ul>
+    </nav>
+    <div class="col-sm-12 col-lg-6 ps-3 align-self-center">
+      <h1 class="title">Toutes les <span class="text-primary d-block">formations</span></h1>
+      <p class="fs-5  pt-2">
+        Découvrez une technologie spécifique à travers une série de vidéo qui vous guidera dans votre apprentissage
+      </p>
+    </div>
+    <div class="col-sm-12 col-lg-6">
+
+      <form class="row justify-content-end pe-2">
+        <div class="col-auto margin-flex d-flex border rounded ">
+          <label class="form-label pt-2 size_niveau text-uppercase text-muted" for="filter-level">Niveau:</label>
+          <select name="level" class="border-0 form-select ps-2 size_select" id="filter-level"
+            onchange="this.form.submit()">
+            <option value="">Tous</option>
+            {% for key, level in levels %}
+            <option {{ app.request.get('level')==key ~ '' ? 'selected' : '' }} value="{{ key }}">{{ level }}</option>
+            {% endfor %}
+          </select>
+
+        </div>
+        <div class="col-auto margin-flex d-flex border rounded">
+          <label class="form-label pt-2 size_Technologie text-uppercase text-muted"
+            for="category_id">Technologie:</label>
+          <select name="category" class="border-0 form-select ps-2 size_select" id="filter-category"
+            onchange="this.form.submit()">
+            <option value="">Toutes</option>
+
+            {% if selectedCategory %}
+            <option value="{{ selectedCategory.id }}" selected>{{ selectedCategory.name }}</option>
+            {% endif %}
+            {% for category in categorys %}
+            <option value="{{ category.id }}">{{ category.name}}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </form>
+
+      {% if formations| length > 0 %}
+      <div class="row">
+        {% for formation in formations|slice(0,2)%}
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6 my-3">
+          {% include 'formation/card.html.twig' %}
+        </div>
+        {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    {% if formations | length > 0 %}
+    {% for formation in formations|slice(2,formations|length) %}
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 my-2">
+      {% include 'formation/card.html.twig' %}
+    </div>
+    {% endfor %}
+    <div class="navigation my-4">
+      {% do formations.setPageRange(2) %}
+      {{ knp_pagination_render(formations,'pagination.html.twig') }}
+    </div>
+    {% else %}
+    <div class="container mt-5">
+      <div class="row">
+        <img src="{{asset('build/images/no-courses.svg')}}" class="card-img-top rounded-img-5 img-card-size"
+          alt="no cours">
+        <p class="text-center my-4 text-muted">Nous n'avons pas trouvé de résultats avec vos critères de recherche.</p>
+        <p class="text-center text-muted">
+          <a class="btn nav-link btn-no-course" href="{{ path('formation')}}">Explorer les cours
+          </a>
+        </p>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,196 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+
+<div class="container my-5">
+    <nav aria-label="breadcrumb">
+        <ul class="list-inline">
+            <li class="list-inline-item"><a class="nav-link text-dark p-0" href="{{ path('home') }}">Accueil</a></li>
+            <li class="list-inline-item">/</li>
+            <li class="list-inline-item"><a class="nav-link text-dark p-0" href="{{ path('formation') }}">Formations</a>
+            </li>
+            <li class="list-inline-item">/</li>
+            <li class="list-inline-item"><a class="nav-link text-dark p-0"
+                    href="{{ path('start_read_formation', {'idformation': formation.id}) }}">{{formation.title}}</a>
+            </li>
+            </ol>
+    </nav>
+    <div class="bg-primary radius bg-header-img">
+        <div class="p-4">
+            <h1 class="display-6 fw-bold text-white py-3">{{formation.title}}</h1>
+            <div class="row">
+                <div class="d-flex col">
+                    <p class="text-white txt-inline my-1">Créer par </p>
+                    <div class="avatar-group px-1">
+                        <a class="avatar avatar-circle" data-toggle="tooltip" data-placement="top"
+                            title="Formateur {{formation.user.firstName ~' '~ formation.user.lastName}}" href="#">
+                            {% if formation.user.picture is null %}
+                            <img src="{{asset('images/userprofile/default.jpg')}}"
+                                class="img-fluid avatar-img-feature"
+                                alt="Formateur {{formation.user.firstName ~' '~ formation.user.lastName}}">
+                            {% else %}
+                            <img src="{{asset('images/userprofile/'~ formation.user.picture)}}"
+                                class="img-fluid avatar-img-feature"
+                                alt="Formateur {{formation.user.firstName ~' '~ formation.user.lastName}}">
+                            {% endif %}
+                        </a>
+                    </div>
+                    <p class="text-white my-1"> <span class="fw-bold">{{formation.user.firstName ~' '~
+                            formation.user.lastName}}</span></p>
+                </div>
+                <div class="col-auto float-end align-self-center">
+                    <div class="d-flex">
+                        <div class="circle-border text-center">
+                            <svg width="16" height="16" fill="#fff" class="bi bi-award" viewBox="0 0 16 16">
+                                <path
+                                    d="M9.669.864 8 0 6.331.864l-1.858.282-.842 1.68-1.337 1.32L2.6 6l-.306 1.854 1.337 1.32.842 1.68 1.858.282L8 12l1.669-.864 1.858-.282.842-1.68 1.337-1.32L13.4 6l.306-1.854-1.337-1.32-.842-1.68L9.669.864zm1.196 1.193.684 1.365 1.086 1.072L12.387 6l.248 1.506-1.086 1.072-.684 1.365-1.51.229L8 10.874l-1.355-.702-1.51-.229-.684-1.365-1.086-1.072L3.614 6l-.25-1.506 1.087-1.072.684-1.365 1.51-.229L8 1.126l1.356.702 1.509.229z">
+                                </path>
+                                <path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1 4 11.794z"></path>
+                            </svg>
+                        </div>
+                        <p class="lead text-white ms-2">Certification</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+<div class="container">
+    <ol class="c-stepper ps-0">
+        {% set i=0 %}
+        {% set total = formation.chapters| length %}
+        {% for chapter in formation.chapters %}
+        {% set i=i+1 %}
+        <li class="c-stepper-item {{ i==currentchapter.orderChapter ? 'active' }} {{ i==total ? 'pad-1' }} h-100">
+            <h5 class="c-title pt-4">
+                <a class="text-decoration-none"
+                    href="{{ path('start_read_chapter', {'idformation': formation.id ,'idchapter': chapter.id }) }}">{{chapter.title}}
+                </a>
+            </h5>
+        </li>
+        {% endfor %}
+    </ol>
+</div>
+<div class="container mb-5">
+    <div class="row">
+        <div class="col-lg-9">
+            <div class="my-3">
+                {% if currentblog is defined and currentblog is not null %}
+                <h3 class="my-5">{{ currentblog.title }}</h3>
+                {{ currentblog.content|raw }}
+                <div class="text-center">
+                    {% if currentchapter is defined and currentchapter is not null %}
+                {% set lastBlog = currentchapter.blogs| last %}
+                {% set lastChapter = formation.chapters| last %}
+                {% if currentblog is defined and currentblog is not null %}
+                    {% if currentblog == lastBlog %}
+                       {% if currentchapter == lastChapter %}
+                       <a class="btn btn-ioacademy text-uppercase mt-5"
+                       href="{{ path('finish_formation', {'idformation': formation.id}) }}">J'ai terminé La formation</a>
+                       {% else %}
+                       <a class="btn btn-ioacademy text-uppercase mt-5"
+                       href="{{ path('finish_chapter', {'idformation': formation.id,'idchapter': currentchapter.id}) }}">J'ai terminé ce chapitre</a> 
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+                </div>
+                <div class="row">
+                <div class="col h-100">    
+                {% if prevblog is defined and prevblog is not null %}
+                    <a class="btn-formation my-4 d-flex"
+                    href="{{ path('start_read_blog', {'idformation': formation.id,'idblog': prevblog.id}) }}">
+                    
+                      <div class="align-middle align-self-center">
+                        <svg width="16" height="16" fill="currentColor" class="bi bi-chevron-left my-auto" viewBox="0 0 50 60">
+                            <path d="M12.745,23.915c0.283-0.282,0.59-0.52,0.913-0.727L35.266,1.581c2.108-2.107,5.528-2.108,7.637,0.001
+                            c2.109,2.108,2.109,5.527,0,7.637L24.294,27.828l18.705,18.706c2.109,2.108,2.109,5.526,0,7.637
+                            c-1.055,1.056-2.438,1.582-3.818,1.582s-2.764-0.526-3.818-1.582L13.658,32.464c-0.323-0.207-0.632-0.445-0.913-0.727
+                            c-1.078-1.078-1.598-2.498-1.572-3.911C11.147,26.413,11.667,24.994,12.745,23.915z"/>
+                        </svg></div>
+                          <div class="align-middle align-self-center col">{{prevblog.title}}</div>
+                      </a>
+                {% endif %}
+                </div>
+                <div class="col-auto h-100"> 
+                {% if nextblog is defined and nextblog is not null %}
+                    <a class="btn-formation my-4 d-flex"
+                    href="{{ path('start_read_blog', {'idformation': formation.id,'idblog': nextblog.id}) }}">
+                    <div class="align-middle align-self-center col">{{nextblog.title}}</div>
+                    <div class="align-middle align-self-center">
+                        <svg width="16" height="16" fill="currentColor" class="bi bi-chevron-right align-middle my-auto" viewBox="0 0 50 60">
+                            <path d="M43.006,23.916c-0.28-0.282-0.59-0.52-0.912-0.727L20.485,1.581c-2.109-2.107-5.527-2.108-7.637,0.001
+		c-2.109,2.108-2.109,5.527,0,7.637l18.611,18.609L12.754,46.535c-2.11,2.107-2.11,5.527,0,7.637c1.055,1.053,2.436,1.58,3.817,1.58
+		s2.765-0.527,3.817-1.582l21.706-21.703c0.322-0.207,0.631-0.444,0.912-0.727c1.08-1.08,1.598-2.498,1.574-3.912
+		C44.605,26.413,44.086,24.993,43.006,23.916z"/>
+                          </svg></div></a>
+                {% endif %}
+                </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="navbar-expand-lg navbar-light">
+                <div class="navbar-vertical">
+                    <div class="card flex-grow-1 mb-5 shadow radius border-1">
+                        <div class="card-body">
+                            <div class="my-3">
+                                <h4 class="card-title text-center fs-5 c-title">
+                                    {% if currentblog is defined and currentblog is not null %}
+                                    <h3 class="my-5"> {{ currentblog.chapter.title }}</h3>
+                                    {% endif %}
+                                </h4>
+                            </div>
+                            <ul class="nav nav-sm nav-tabs nav-vertical border-0">
+                                {% if currentchapter is defined and currentchapter is not null %}
+                                {% for blog in currentchapter.blogs %}
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark {{ blog.id==currentblog.id ? 'dashboard' }}"
+                                        href="{{ path('start_read_blog', {'idformation': formation.id,'idblog': blog.id}) }}">
+                                        {{blog.title}}
+                                    </a>
+                                </li>
+                                {% endfor %}
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card my-2  shadow radius border-0">
+                <div class="row card-body">
+                    <p class="fw-bold fs-6">{{formation.title}}</p>
+                    <div class="col">
+                        <p class="float-start mb-0">Avancement du cours</p>
+                        {% if percent is defined and percent is not null %}
+                        {% set percentround = percent|round %}
+                        <p class="fs-7 float-end me-3 mb-0">{{ percentround~'%' }}
+                        </p>
+                        {% else %}
+                        <p class="fs-7 float-end me-3 mb-0">0%</p>
+                        {% endif %}
+                    </div>
+                    <div class="col-12 pe-4 my-2">
+                        <div class="progress" style="height:5px;">
+                            {% if percent is defined and percent is not null %}
+                            {% set percentround = percent|round %}
+                            <div class="progress-bar" role="progressbar" aria-valuenow="{{ percentround }}"
+                                aria-valuemin="0" aria-valuemax="100" style="width:{{percentround~'%'}}">
+                            </div>
+                            {% else %}
+                            <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="0"
+                                aria-valuemin="0" aria-valuemax="100" style="width:0%">
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

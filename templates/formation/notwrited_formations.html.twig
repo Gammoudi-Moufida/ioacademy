@@ -1,0 +1,280 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+<div class="container-fluid p-0">
+  <div class="container pt-5 pb-5">
+    <div class="row">
+      <div class="col-lg-3 pe-5">
+        <div class="navbar-expand-lg navbar-light">
+          <div id="sidebarNav" class="collapse navbar-collapse navbar-vertical">
+            <div class="card flex-grow-1 mb-5 shadow radius border-1">
+              <div class="card-body">
+                <div class="text-center mb-5">
+                  <div class="avatar-circle avatar-g my-3">
+                    {% if app.user.picture is null %}
+                    <img class="avatar-img" src="{{asset('images/userprofile/default.jpg')}}"
+                      alt="Image Description">
+                    {% else %}
+                    <img class="avatar-img" src="{{asset('images/userprofile/'~ app.user.picture)}}"
+                      alt="Image Description">
+                    <img class="avatar-status avatar-g-img" src="{{asset('build/images/top-vendor.svg')}}"
+                      alt="Image Description" aria-label="Verified user">
+                    {% endif %}
+                  </div>
+                  <h4 class="card-title fs-5 mb-0">{{app.user.firstName ~' '~app.user.lastName}}</h4>
+                  <p class="card-text small">{{app.user.mail}}</p>
+                </div>
+                <h6 class="card-header-title my-3">Compte</h6>
+                <ul class="nav nav-sm nav-tabs nav-vertical border-0">
+                  <li class="nav-item border-0">
+                    <a class="nav-link text-dark" href="{{ path('user_profile') }}">
+                      <svg width="16" height="16" fill="#8c98a4" class="bi bi-info-circle me-2 mb-1"
+                        viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                        <path
+                          d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                      </svg> Informations personnelles
+                    </a>
+                  </li>
+                  <li class="nav-item border-0">
+                    <a class="nav-link text-dark " href="{{ path('user_change_address') }}">
+                      <svg width="16" height="16" fill="#8c98a4" class="bi bi-geo-alt me-2 mb-1" viewBox="0 0 16 16">
+                        <path
+                          d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z" />
+                        <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                      </svg> Adresse
+                    </a>
+                  </li>
+                </ul>
+                <h6 class="card-header-title my-3">Formation</h6>
+                <ul class="nav nav-sm nav-tabs nav-vertical border-0">
+                  {% if is_granted('ROLE_ADMIN') %}
+                  <li class="nav-item">
+                    <a class="nav-link text-dark dashboard" href="{{ path('invalide_formations') }}">
+                      <svg width="16" height="16" fill="#8c98a4" class="bi bi-check-square me-2 mb-1"
+                        viewBox="0 0 16 16">
+                        <path
+                          d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+                        <path
+                          d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.235.235 0 0 1 .02-.022z" />
+                      </svg> Validation
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-dark dashboard" href="{{ path('not_writed_formations') }}">
+                      <svg width="16" height="16" fill="#8c98a4" class="bi bi-pencil-square me-2 mb-1"
+                        viewBox="0 0 16 16">
+                        <path
+                          d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                        <path fill-rule="evenodd"
+                          d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                      </svg> Saisie
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-dark" href="{{ path('manage_categories') }}">
+                      <svg width="16" height="16" fill="#8c98a4" class="bi bi-folder2-open me-2 mb-1"
+                        viewBox="0 0 16 16">
+                        <path
+                          d="M1 3.5A1.5 1.5 0 0 1 2.5 2h2.764c.958 0 1.76.56 2.311 1.184C7.985 3.648 8.48 4 9 4h4.5A1.5 1.5 0 0 1 15 5.5v.64c.57.265.94.876.856 1.546l-.64 5.124A2.5 2.5 0 0 1 12.733 15H3.266a2.5 2.5 0 0 1-2.481-2.19l-.64-5.124A1.5 1.5 0 0 1 1 6.14V3.5zM2 6h12v-.5a.5.5 0 0 0-.5-.5H9c-.964 0-1.71-.629-2.174-1.154C6.374 3.334 5.82 3 5.264 3H2.5a.5.5 0 0 0-.5.5V6zm-.367 1a.5.5 0 0 0-.496.562l.64 5.124A1.5 1.5 0 0 0 3.266 14h9.468a1.5 1.5 0 0 0 1.489-1.314l.64-5.124A.5.5 0 0 0 14.367 7H1.633z" />
+                      </svg> Catégories
+                    </a>
+                  </li>
+                  {% elseif is_granted('ROLE_TEACHER') %}
+                  <li class="nav-item">
+                    <a class="nav-link text-dark" href="{{ path('user_list_formations') }}">
+                      <svg width="16" height="16" fill="#8c98a4" class="bi bi-journals me-2 mb-1" viewBox="0 0 16 16">
+                        <path
+                          d="M5 0h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2 2 2 0 0 1-2 2H3a2 2 0 0 1-2-2h1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1H1a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v9a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1H3a2 2 0 0 1 2-2z">
+                        </path>
+                        <path
+                          d="M1 6v-.5a.5.5 0 0 1 1 0V6h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V9h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 2.5v.5H.5a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1H2v-.5a.5.5 0 0 0-1 0z">
+                        </path>
+                      </svg>
+                      Mes formations
+                      <span class="badge bg-light text-dark rounded-pill float-end">3</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-dark" href="{{ path('user_add_course') }}">
+                      <svg width="16" height="16" fill="#8c98a4" class="bi bi-plus-square me-2 mb-1"
+                        viewBox="0 0 16 16">
+                        <path
+                          d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+                        <path
+                          d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                      </svg> Ajouter formation
+                    </a>
+                  </li>
+                  {% elseif is_granted('ROLE_STUDENT') %}
+                  <li class="nav-item">
+                    <a class="nav-link text-dark" href="{{ path('user_current_courses') }}">
+                      <svg width="16" height="16" fill="#8c98a4" class="bi bi-journals me-2 mb-1" viewBox="0 0 16 16">
+                        <path
+                          d="M5 0h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2 2 2 0 0 1-2 2H3a2 2 0 0 1-2-2h1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1H1a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v9a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1H3a2 2 0 0 1 2-2z">
+                        </path>
+                        <path
+                          d="M1 6v-.5a.5.5 0 0 1 1 0V6h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V9h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 2.5v.5H.5a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1H2v-.5a.5.5 0 0 0-1 0z">
+                        </path>
+                      </svg> Mes formations
+                      <span class="badge bg-light text-dark rounded-pill float-end">3</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-dark" href="{{ path('user_current_courses') }}">
+                      <svg width="16" height="16" fill="#8c98a4" class="bi bi-journals me-2 mb-1" viewBox="0 0 16 16">
+                        <path
+                          d="M5 0h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2 2 2 0 0 1-2 2H3a2 2 0 0 1-2-2h1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1H1a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v9a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1H3a2 2 0 0 1 2-2z">
+                        </path>
+                        <path
+                          d="M1 6v-.5a.5.5 0 0 1 1 0V6h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V9h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 2.5v.5H.5a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1H2v-.5a.5.5 0 0 0-1 0z">
+                        </path>
+                      </svg> Mes certificats
+                      <span class="badge bg-light text-dark rounded-pill float-end">3</span>
+                    </a>
+                  </li>
+                  {% endif %}
+                </ul>
+                <h6 class="card-header-title my-3">Sécurité</h6>
+                <ul class="nav nav-sm nav-tabs nav-vertical border-0">
+                  <li class="nav-item border-0">
+                    <a class="nav-link text-dark" href="{{ path('user_change_password') }}">
+                      <svg width="16" height="16" fill="#8c98a4" class="bi bi-shield-check me-2 mb-1"
+                        viewBox="0 0 16 16">
+                        <path
+                          d="M5.338 1.59a61.44 61.44 0 0 0-2.837.856.481.481 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.725 10.725 0 0 0 2.287 2.233c.346.244.652.42.893.533.12.057.218.095.293.118a.55.55 0 0 0 .101.025.615.615 0 0 0 .1-.025c.076-.023.174-.061.294-.118.24-.113.547-.29.893-.533a10.726 10.726 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.775 11.775 0 0 1-2.517 2.453 7.159 7.159 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7.158 7.158 0 0 1-1.048-.625 11.777 11.777 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 62.456 62.456 0 0 1 5.072.56z" />
+                        <path
+                          d="M10.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
+                      </svg> Changer mot de passe
+                    </a>
+                  </li>
+                  <li class="nav-item border-0">
+                    <a class="nav-link text-dark" href="{{ path('user_disable_account') }}">
+                      <svg width="16" height="16" fill="#8c98a4" class="bi bi-slash-circle me-2 mb-1"
+                        viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                        <path d="M11.354 4.646a.5.5 0 0 0-.708 0l-6 6a.5.5 0 0 0 .708.708l6-6a.5.5 0 0 0 0-.708z" />
+                      </svg> Désactiver compte
+                    </a>
+                  </li>
+                </ul>
+                <ul class="nav nav-sm nav-tabs nav-vertical border-0">
+                  <li class="nav-item">
+                    <a class="nav-link text-dark" href="{{ path('logout')}}">
+                      <svg width="16" height="16" fill="#8c98a4" class="bi bi-box-arrow-left me-2 mb-1"
+                        viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                          d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z" />
+                        <path fill-rule="evenodd"
+                          d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z" />
+                      </svg> Déconnexion
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-9 ">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a class="text-dark text-decoration-none"
+                href="{{ path('not_writed_formations')}}">Formation en attente</a></li>
+          </ol>
+        </nav>
+        <div class="py-3">
+          <h5 class="card-header-title">Liste des formations en attente de saisie</h5>
+        </div>
+        <div class="row">
+          <div class="col pt-3">
+            <p>Vous avez {{ pagination|length }} formations en attente de validation , et chaque une doit être saisie
+              avant validation.</p>
+          </div>
+        </div>
+        <div class="row mb-5">
+          {% for formation in pagination %}
+          <div class="col-12 col-sm-12 col-md-6 col-lg-4 mb-5 card-group">
+            <div class="card radius shadow h-100">
+              <div class="card-pinned">
+                {% if formation.image is null %}
+                <img src="{{asset('images/formation/defaultformation.jpg')}}"
+                  class="card-img-top rounded-img-5 img-card-size" alt="course">
+                {% else %}
+                <img src="{{asset('images/formation/' ~ formation.image)}}"
+                  class="card-img-top rounded-img-5 img-card-size " alt="course">
+                {% endif %}
+              </div>
+              <div class="card-body m-1">
+                <div class="mb-3">
+                  <h3 class="card-title">
+                    <a class="black-title nav-link fs-5" href="">{{formation.title}}</a>
+                  </h3>
+                </div>
+                <div class="row align-items-center">
+                  <div class="col">
+                    <div class="avatar-group">
+                      <a class="avatar avatar-circle" data-toggle="tooltip" data-placement="top"
+                        title="{{ formation.user.lastName}}" href="#">
+                        {% if formation.user.picture is null %}
+                        <img class="img-fluid avatar-img-feature"
+                          src="{{asset('images/userprofile/default.jpg')}}">
+                        {% else %}
+                        <img class="img-fluid avatar-img-feature"
+                          src="{{asset('images/userprofile/'~ formation.user.picture)}}">
+                        {% endif %}
+                      </a>
+                    </div>
+                  </div>
+                  <div class="col-auto pt-3">
+                    <ul class="list-inline list-separator small ms-auto">
+                      <li class="list-inline-item">
+                        <svg width="16" height="16" fill="currentColor" class="bi bi-book mb-1" viewBox="0 0 16 16">
+                          <path
+                            d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z" />
+                        </svg> {{ formation.chapters |length }} Chapitres
+                      </li>
+                      <li class="list-inline-item">
+                        <svg width="16" height="16" fill="currentColor" class="bi bi-clock mb-1" viewBox="0 0 16 16">
+                          <path
+                            d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z" />
+                          <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z" />
+                        </svg> {{ formation.publicationDate |date('Y-m-d') }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                {% if (formation.active == 0) %}
+                <small class="badge bg-danger rounded-pill">Inactive</small>
+                {% elseif (formation.active == 1) %}
+                <small class="badge bg-warning rounded-pill">Attend saisie</small>
+                {% elseif (formation.active == 2) %}
+                <small class="badge bg-warning rounded-pill">En Saisi</small>
+                {% else %}
+                <small class="badge bg-success rounded-pill">Active</small>
+                {% endif %}
+                <div class="row pt-3">
+                  <p>{{ formation.description| u.truncate(60, '..', false) }}</p>
+                </div>
+              </div>
+              <div class="home-card-footer p-3">
+                <div class="float-end">
+                  <a class="btn btn-ioacademy" href="{{ path('admin__manage_formation', {'id': formation.id }) }}">
+                    Modifier</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="d-flex justify-content-end">
+          <div class="navigation">
+            {% do pagination.setPageRange(2) %}
+            {{ knp_pagination_render(pagination,'pagination.html.twig') }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

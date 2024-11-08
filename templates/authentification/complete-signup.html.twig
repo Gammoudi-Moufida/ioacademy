@@ -1,0 +1,83 @@
+<div class="modal fade" id="CompleteSignUpModal" data-keyboard="false" data-backdrop="static"  tabindex="-1" aria-labelledby="CompleteSignUpModal" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            {{ form_start(completeRegistration 
+                ,{'action': path('complete-registration'), 'method': 'get','attr': { 'novalidate': 'novalidate' }}) 
+            }}
+            <div class="modal-body">
+                <div class="modal-close">
+                    <button type="button" id="closemodal" class="btn-close float-end" aria-label="Close"></button>
+                </div>
+                <div class="text-center">
+                    <h3 class="py-4">Bénéficiez de recommandations personnalisées ciblées en fonction de votre profil</h3>
+                </div>
+                <div class="container-fluid">
+                    
+                    <div class="mb-3">
+                        <div class="row">
+                            <div class="d-grid mb-3">
+                                <div id="registration_results"></div>
+                            </div>
+                            <h5 class="pt-3">Éducation</h5>
+                            <div class="col-4">
+                                <label class="form-label">Diplôme</label>
+                                {{ form_widget(completeRegistration.diploma, { 'attr': {'placeholder':'Ex : détenteur d\'une licence'} }) }}
+                                {{ form_errors(completeRegistration.diploma) }}
+                            </div>
+                            <div class="col-4">
+                                <label class="form-label">Université</label>
+                                {{ form_widget(completeRegistration.university, { 'attr': {'placeholder': 'Ex : Université de ...'} }) }}
+                                {{ form_errors(completeRegistration.university) }}
+                            </div>
+                            <div class="col-4">
+                                <label class="form-label">Domaine ou spécialisation</label>
+                                {{ form_widget(completeRegistration.speciality, { 'attr': {'placeholder': 'Ex : Commerce'} }) }}
+                                {{ form_errors(completeRegistration.speciality) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="row">
+                            <h5 class="pt-3">Expérience professionnelle</h5>
+                            <div class="col-4">
+                                <label class="form-label">Profession</label>
+                                {{ form_widget(completeRegistration.profession, { 'attr': {'placeholder':'Ex : Chef de produit'} }) }}
+                                {{ form_errors(completeRegistration.profession) }}
+                            </div>
+                            <div class="col-4">
+                                <label class="form-label">Niveau d'expérience</label>
+                                {{ form_widget(completeRegistration.experience, { 'attr': {'placeholder': 'Ex : dirigeant(e) / responsable'} }) }}
+                                {{ form_errors(completeRegistration.experience) }}
+                            </div>
+                            <div class="col-4">
+                                <label class="form-label">Employeur</label>
+                                {{ form_widget(completeRegistration.employ, { 'attr': {'placeholder': 'Ex : Google'} }) }}
+                                {{ form_errors(completeRegistration.employ) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="row">
+                            <h5 class="pt-3">Objectif de carrière</h5>
+                            <div class="col-4">
+                                <label class="form-label">Profession</label>
+                                {{ form_widget(completeRegistration.professionalGoal, { 'attr': {'placeholder': 'Ex : scientifique des données'} }) }}
+                                {{ form_errors(completeRegistration.professionalGoal) }}
+                            </div>
+                            <div class="col-4">
+                                <label class="form-label">Secteur</label>
+                                {{ form_widget(completeRegistration.sectorGoal, { 'attr': {'placeholder': 'Ex : technologie'} }) }}
+                                {{ form_errors(completeRegistration.sectorGoal) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer d-block text-end">
+                    <button type="button" id="close" class="btn btn-outline-primary text-primary margin-input-btn">Sauter</button>
+                    <button type="submit" class="btn btn-primary text-white margin-input-btn">Enregistrer</button>
+            </div>
+            {{ form_end(registrationForm) }}
+        </div>
+    </div>
+</div>

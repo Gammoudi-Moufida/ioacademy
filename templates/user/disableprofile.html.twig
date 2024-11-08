@@ -1,0 +1,32 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+<div class="container-fluid p-0">
+  <div class="container pt-5">
+    <div class="row">
+      <div class="col-lg-3 pe-5">
+        {% include 'shared/menu.html.twig' %}
+      </div>
+      <div class="col-lg-9">
+        <div class="mt-3">
+          <h5 class="card-header-title">Désactivation de compte</h5>
+        </div>
+        {{ form_start(disableprofileForm,
+        {'action': path('user_disable_account'), 'method': 'POST','attr': { 'novalidate': 'novalidate' }}) }}
+        <div class="row mb-4 mt-4">
+          <p class="card-text">Lorsque vous désactivez votre compte, vous perdez l'accès aux services du compte
+            Io-academy et toutes les informations et données relatives à votre compte seront masquées.
+            Vous pouvez annuler la désactivation à tout moment, il vous suffit de vous reconnecter à votre compte.</p>
+        </div>
+        <div class="row mb-4 ms-1">
+          {{ form_widget(disableprofileForm.disableaccount) }}
+          <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-danger">Désactiver</button>
+          </div>
+        </div>
+        {{ form_end(disableprofileForm) }}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

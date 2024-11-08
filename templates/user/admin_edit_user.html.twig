@@ -1,0 +1,148 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+<div class="container-fluid p-0">
+  <div class="container pt-5">
+    <div class="row">
+      <div class="col-lg-3 pe-5">
+        {% include 'shared/menu.html.twig' %}
+      </div>
+      <div class="col-lg-9">
+        <div class="mt-3">
+          <h5 class="card-header-title">Modifier utilisateur</h5>
+        </div>
+        {{ form_start(userForm,
+        {'action': path('admin_edit_user', {'id': user.id }), 'method': 'POST','attr': { 'novalidate': 'novalidate' }})
+        }}
+        {% for message in app.flashes('success-edit-user') %}
+        <div class="flash-notice text-start py-2">
+          <div class="alert alert-success " role="alert">
+            {{ message }}
+          </div>
+        </div>
+        {% endfor %}
+        <div class="d-flex flex-row bd-highlight mb-4">
+          <label for="pictureLabel" class="bd-highlight col-3 col-form-label form-label align-self-center">Changer
+            Photo</label>
+          <div class="p-2 bd-highlight">
+            <div class="avatar-circle text-center">
+              {% if user.picture is null %}
+              <img id="img_preview" class="avatar-img" src="{{asset('images/userprofile/default.jpg')}}"
+                alt="Image Description">
+              {% else %}
+              <img id="img_preview" class="avatar-img" src="{{asset('images/userprofile/'~ user.picture)}}"
+                alt="Image Description">
+              {% endif %}
+            </div>
+          </div>
+          <div class="p-2 bd-highlight align-self-center">
+              <label  class="custom-select-pic">
+                {{ form_widget(userForm.picture) }}
+              </label>
+              {{ form_errors(userForm.picture) }}
+          </div>
+        </div>
+        <div class="row mb-4">
+          <label for="firstNameLabel" class="col-sm-3 col-form-label form-label">
+            Nom & Prenom
+          </label>
+          <div class="col-sm-9">
+            <div class="input-group">
+              {{ form_widget(userForm.firstName, { 'attr': {'class': "span12",'placeholder': 'Nom*'} }) }}
+              {{ form_errors(userForm.firstName) }}
+              {{ form_widget(userForm.lastName, { 'attr': {'placeholder': 'Prenom*'} }) }}
+              {{ form_errors(userForm.lastName) }}
+            </div>
+          </div>
+        </div>
+        <div class="row mb-4">
+          <label for="phoneLabel" class="col-sm-3 col-form-label form-label">Télephone</label>
+          <div class="col-sm-9">
+            <div class="input-group">
+              {{ form_widget(userForm.numTel, { 'attr': {'placeholder': 'Téléphone*'} }) }}
+              {{ form_errors(userForm.numTel) }}
+            </div>
+          </div>
+        </div>
+        {# <div class="row mb-4">
+          <label for="levelLabel" class="col-sm-3 col-form-label form-label">Niveau d'études</label>
+          <div class="col-sm-9">
+            {{ form_widget(userForm.schoolLevel, { 'attr': {'placeholder': 'Niveau d\'études*'} }) }}
+            {{ form_errors(userForm.schoolLevel) }}
+          </div>
+        </div> #}
+        <div class="row mb-4">
+          <label class="col-sm-3 col-form-label form-label">Biographie</label>
+          <div class="col-sm-9">
+            <div class="input-group">
+              {{ form_widget(userForm.biography) }}
+              {{ form_errors(userForm.biography) }}
+            </div>
+          </div>
+        </div>
+        <div class="row mb-4">
+          <label for="firstNameLabel" class="col-sm-3 col-form-label form-label">
+            Lieu
+          </label>
+          <div class="col-sm-9">
+            <div class="input-group">
+              {{ form_widget(userForm.country, { 'attr': {'class': "span12",'placeholder': 'Pays'} }) }}
+              {{ form_widget(userForm.city, { 'attr': {'placeholder': 'Ville'} }) }}
+              {{ form_widget(userForm.street, { 'attr': {'placeholder': 'Rue'} }) }}
+
+            </div>
+            {{ form_errors(userForm.country) }}
+            {{ form_errors(userForm.city) }}
+            {{ form_errors(userForm.street) }}
+          </div>
+        </div>
+        <div class="row mb-4">
+          <label for="firstNameLabel" class="col-sm-3 col-form-label form-label">
+            Adresse
+          </label>
+          <div class="col-sm-9">
+            <div class="input-group">
+              {{ form_widget(userForm.adress, { 'attr': {'class': "span12",'placeholder': 'Adresse*'} }) }}
+              {{ form_widget(userForm.zipcode, { 'attr': {'placeholder': 'Code postale*'} }) }}
+            </div>
+            {{ form_errors(userForm.adress) }}
+            {{ form_errors(userForm.zipcode) }}
+          </div>
+        </div>
+        <div class="row mb-4">
+          <label for="emailLabel" class="col-sm-3 col-form-label form-label">Rôles</label>
+          <div class="col-sm-9">
+            {{ form_widget(userForm.roles) }}
+            {{ form_errors(userForm.roles) }}
+          </div>
+        </div>
+        <div class="row mb-4">
+          <label for="emailLabel" class="col-sm-3 col-form-label form-label">Email</label>
+          <div class="col-sm-9">
+            {{ form_widget(userForm.mail, { 'attr': {'placeholder': 'Mail*'} }) }}
+            {{ form_errors(userForm.mail) }}
+          </div>
+        </div>
+        <div class="row mb-4">
+          <label for="firstNameLabel" class="col-sm-3 col-form-label form-label">
+            Mot de passe
+          </label>
+          <div class="col-sm-9">
+            <div class="input-group">
+              {{ form_widget(userForm.password2.first, { 'attr': {'placeholder': 'Mot de passe*'} }) }}
+              {{ form_widget(userForm.password2.second, { 'attr': {'placeholder': 'Repetez mot de passe*'} }) }}
+            </div>
+            {{ form_errors(userForm.password2.first) }}
+          </div>
+        </div>
+        <div class="home-card-footer p-2">
+          <div class="d-flex justify-content-end gap-3">
+            <button type="submit" class="btn btn-ioacademy">Valider</button>
+          </div>
+        </div>
+        {{ form_end(userForm) }}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

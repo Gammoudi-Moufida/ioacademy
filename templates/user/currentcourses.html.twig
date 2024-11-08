@@ -1,0 +1,108 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+<div class="container-fluid p-0">
+  <div class="container pt-5 pb-5">
+    <div class="row">
+      <div class="col-lg-3 pe-5">
+        {% include 'shared/menu.html.twig' %}
+      </div>
+      <div class="col-lg-9 ">
+        <div class="mt-3">
+          <h5 class="card-header-title">Mes cours</h5>
+        </div>
+        <div class="row">
+          <div class="col pt-3">
+            {% if formations is defined and formations is not null and formations| length >0 %}
+            <p>Vous avez inscrit à {{formations | length}} cours sur notre plateforme.</p>
+            {% else %}
+            <div class="container mt-5">
+              <div class="row">
+                <img src="{{asset('build/images/no-courses.svg')}}"
+                        class="card-img-top rounded-img-5 img-card-size" alt="no cours">
+                        <p class="text-center my-4 text-muted">Vous n'avez pas de cour en cours.</p>
+                        <p class="text-center text-muted">
+                          <a class="btn nav-link btn-no-course" href="{{ path('formation')}}">Explorer les cours
+                          </a>
+                        </p>
+              </div>              
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="row mb-4">
+          {% if formations is defined and formations is not null and formations| length >0 %}
+            <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+              {% for tr in formations %}
+              <div class="mb-3 px-3">
+                <div class="card radius shadow h-100">
+                  <a class="text-decoration-none" href="{{ path('description', {'id': tr.formation.id}) }}">
+                    <div class="p-2">
+                      {% if tr.formation.image is null %}
+                      <img src="{{asset('images/formation/defaultformation.jpg')}}"
+                        class="card-img-top rounded-img-5 img-card-size" alt="course">
+                      {% else %}
+                      <img class="card-img radius img-card-size" src="{{ asset('images/formation/'~ tr.formation.image) }}"
+                        alt="Image Description">
+                      {% endif %}
+                    </div>
+                  </a>
+                  <div class="card-body">
+                    <a class="text-decoration-none" href="{{ path('description', {'id': tr.formation.id}) }}">
+                      <div>
+                        <h3 class="card-title h-title-card">
+                          <div class="black-title fs-5">{{
+                            tr.formation.title}}
+                          </div>
+                        </h3>
+                      </div>
+                    </a>
+                    <div class="row p-1 my-2">
+                      <p class="mb-0 text-muted">{{tr.formation.description| u.truncate(60, '..', false) }}</p>
+                    </div>
+                    <div class="row p-1 my-2">
+                    <div class="col text-muted">
+                      <svg width="16" height="16" fill="currentColor" class="bi bi-book mb-1" viewBox="0 0 16 16">
+                        <path
+                          d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z">
+                        </path>
+                      </svg> {{tr.formation.chapters|length }} chapitres
+                    </div>
+                    <div class="col-auto text-muted">
+                      {% if tr.status =='started' %}
+                      <span class="badge bg-primary text-white">En cours</span>
+                      {% else %}
+                      <span class="badge bg-success text-white">Terminé</span>
+                      {% endif %}
+                    </div>
+                    </div>
+                    <div class="row align-items-center">
+                      <div class="col-2 avatar-padding pe-0">
+                        <div class="avatar-group">
+                          <a class="avatar avatar-circle" data-toggle="tooltip" data-placement="top" title="abdelhafidh"
+                            href="#">
+                            {% if tr.formation.user.picture is null %}
+                            <img class="img-fluid avatar-img-feature"
+                              src="{{ asset('images/userprofile/default.jpg') }}" alt="image utilisateur">
+                            {% else %}
+                            <img class="img-fluid avatar-img-feature"
+                              src="{{asset('images/userprofile/' ~ tr.formation.user.picture)}}" alt="image utilisateur">
+                            {% endif %}
+                          </a>
+                        </div>
+                      </div>
+                      <div class="col ps-1 text-muted"> Créer par {{tr.formation.user.firstName}} {{tr.formation.user.lastName}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

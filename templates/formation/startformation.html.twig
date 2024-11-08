@@ -1,0 +1,98 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+<div class="container-fluid p-0">
+  <div class="container pt-5 pb-5">
+    <div class="row">
+      <div class="col-lg-3 pe-5">
+        {% include 'shared/menu.html.twig' %}
+      </div>
+      <div class="col-lg-9">
+        <h2 class="card-header-title my-5 text-center">{{formation.title}}</h2>
+        <div class="container">
+        {% for chapter in chapters|slice(0,1) %}
+          <h5 class="mt-4 mb-3">{{chapter.title}}</h5>
+          {% for blog in chapter.blogs|slice(0,1) %}
+                        <div class="accordion-item">
+                            <div class="accordion-header " id="headingBasics{{blog.id}}">
+                                <a class="accordion-button bg-white text-decoration-none" role="button" data-bs-toggle="collapse"
+                                    data-bs-target="#accordionCourse{{blog.id}}" aria-expanded="true"
+                                    aria-controls="accordionCourse{{blog.id}}">
+                                    <div class="flex-grow-1  ps-3">
+                                        <div class="row ">
+                                            <div class="col-8">
+                                                {{blog.title}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div id="accordionCourse{{blog.id}}" class="accordion-collapse collapse show"
+                                aria-labelledby="headingBasics{{blog.id}}">
+                                <div class="accordion-body">
+                                    {{blog.content}}
+                                </div>
+                            </div>
+                        </div>
+          {% endfor %}
+          {% for blog in chapter.blogs|slice(1,chapters|length) %}
+                        <div class="accordion-item">
+                            <div class="accordion-header" id="headingBasics{{blog.id}}">
+                                <a class="accordion-button bg-white collapsed text-decoration-none" role="button"
+                                    data-bs-toggle="collapse" data-bs-target="#accordionCourse{{blog.id}}" aria-expanded="false"
+                                    aria-controls="accordionCourse{{blog.id}}">
+                                    <div class="ps-3">{{blog.title}}</div>
+                                </a>
+                            </div>
+                            <div id="accordionCourse{{blog.id}}" class="accordion-collapse collapse"
+                                aria-labelledby="headingBasics{{blog.id}}">
+                                <div class="accordion-body">
+                                    {{blog.content}}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+        {% endfor %}
+        {% for chapter in chapters|slice(1,chapters|length) %}
+          <h5 class="mt-4 mb-3">{{chapter.title}}</h5>
+          {% for blog in chapter.blogs|slice(0,1) %}
+                        <div class="accordion-item">
+                            <div class="accordion-header border-top" id="headingBasics{{blog.id}}">
+                                <a class="accordion-button bg-white collapsed text-decoration-none" role="button"
+                                    data-bs-toggle="collapse" data-bs-target="#accordionCourse{{blog.id}}" aria-expanded="false"
+                                    aria-controls="accordionCourse{{blog.id}}">
+                                    <div class="ps-3">{{blog.title}}</div>
+                                </a>
+                            </div>
+                            <div id="accordionCourse{{blog.id}}" class="accordion-collapse collapse"
+                                aria-labelledby="headingBasics{{blog.id}}">
+                                <div class="accordion-body">
+                                    {{blog.content}}
+                                </div>
+                            </div>
+                        </div>
+          {% endfor %}
+          {% for blog in chapter.blogs|slice(1,chapters|length) %}
+                        <div class="accordion-item">
+                            <div class="accordion-header" id="headingBasics{{blog.id}}">
+                                <a class="accordion-button bg-white collapsed text-decoration-none" role="button"
+                                    data-bs-toggle="collapse" data-bs-target="#accordionCourse{{blog.id}}" aria-expanded="false"
+                                    aria-controls="accordionCourse{{blog.id}}">
+                                    <div class="ps-3">{{blog.title}}</div>
+                                </a>
+                            </div>
+                            <div id="accordionCourse{{blog.id}}" class="accordion-collapse collapse"
+                                aria-labelledby="headingBasics{{blog.id}}">
+                                <div class="accordion-body">
+                                    {{blog.content}}
+                                </div>
+                            </div>
+                        </div>
+            {% endfor %}
+        {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

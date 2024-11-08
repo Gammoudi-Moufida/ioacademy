@@ -1,0 +1,54 @@
+<div class="modal fade" id="SignUpModal" tabindex="-1" aria-labelledby="SignUpModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="modal-close">
+                    <button type="button" class="btn-close float-end" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="text-center">
+                    <h3 class="my-3">Inscription</h3>
+                </div>
+                <div class="container-fluid">
+                    {{ form_start(registrationForm,
+                    {'action': path('register'), 'method': 'GET','attr': { 'novalidate': 'novalidate' }}) }}
+                    <div class="mb-3">
+                        <div class="row">
+                            <div class="col-6">
+                                <label class="form-label my-2">Nom</label>
+                                {{ form_widget(registrationForm.firstName, { 'attr': {'placeholder':
+                                'Nom*'} }) }}
+                                {{ form_errors(registrationForm.firstName) }}
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label my-2">Prenom</label>
+                                {{ form_widget(registrationForm.lastName, { 'attr': {'placeholder': 'Prenom*'} }) }}
+                                {{ form_errors(registrationForm.lastName) }}
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label my-2">Adresse mail</label>
+                                {{ form_widget(registrationForm.mail, { 'attr': {'placeholder': 'Adresse mail*'} }) }}
+                                {{ form_errors(registrationForm.mail) }}
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label my-2">Mot de passe</label>
+                                {{ form_widget(registrationForm.password, { 'attr': {'placeholder': 'Mot de passe*'} }) }}
+                                {{ form_errors(registrationForm.password) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">S'inscrire</button>
+                        <div id="registration_result"></div>
+                    </div>
+                    {{ form_end(registrationForm) }}
+                </div>
+            </div>
+            <div class="modal-footer d-block text-center">
+                <p>Vous avez déjà un compte ? <a class="fw-bold nav-link p-0" href="javascript:;" role="button"
+                        data-bs-toggle="modal" data-bs-target="#LoginModal">Connexion</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
